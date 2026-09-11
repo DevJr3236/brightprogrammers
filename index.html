@@ -1,605 +1,1853 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brightprogrammers | Modern Software & Digital Experiences</title>
-    <!-- FontAwesome for Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <!-- Google Fonts: Space Grotesk -->
+
+    <title>Brightprogrammers | Web Development & Digital Solutions</title>
+
+    <meta name="description" content="Brightprogrammers builds modern websites, custom WordPress solutions, web applications and digital experiences.">
+
+    <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
     <style>
+
+        /* =========================================================
+           ROOT
+        ========================================================= */
+
         :root {
-            --bg-deep: #050609;
-            --bg-card: #0d1117;
-            --primary: #3b82f6; /* Bright Blue */
-            --primary-glow: rgba(59, 130, 246, 0.4);
-            --accent: #10b981; /* Emerald Green */
-            --text-main: #e2e8f0;
-            --text-dark: #94a3b8;
-            --border: #1e293b;
-            --glass: rgba(17, 25, 40, 0.75);
-            --ease: cubic-bezier(0.23, 1, 0.32, 1);
+            --bg: #f7f8fa;
+            --surface: #ffffff;
+            --surface-soft: #f1f3f6;
+
+            --text: #111827;
+            --text-soft: #667085;
+            --text-muted: #98a2b3;
+
+            --border: #e5e7eb;
+
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-soft: #eff6ff;
+
+            --dark: #111827;
+
+            --radius: 18px;
+            --radius-small: 12px;
+
+            --container: 1180px;
+
+            --font-body: "DM Sans", sans-serif;
+            --font-heading: "Manrope", sans-serif;
+
+            --transition: 0.25s ease;
         }
 
-        /* --- Global Reset & Scrollbar --- */
-        * {
+
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        html {
             scroll-behavior: smooth;
         }
 
         body {
-            background-color: var(--bg-deep);
-            color: var(--text-main);
-            overflow-x: hidden;
-            line-height: 1.5;
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
 
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-deep); }
-        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+        img {
+            max-width: 100%;
+            display: block;
+        }
 
-        /* --- Utility Classes --- */
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        input,
+        textarea {
+            font: inherit;
+        }
+
+
+        /* =========================================================
+           GLOBAL
+        ========================================================= */
+
         .container {
-            max-width: 1200px;
+            width: min(var(--container), calc(100% - 48px));
             margin: 0 auto;
-            padding: 0 24px;
         }
 
-        /* --- Keyframe Animations --- */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes primaryGlowPulse {
-            0% { box-shadow: 0 0 5px var(--primary-glow); }
-            50% { box-shadow: 0 0 20px var(--primary-glow); }
-            100% { box-shadow: 0 0 5px var(--primary-glow); }
-        }
-
-        @keyframes iconFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-
-        @keyframes backgroundGradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* --- Header / Navigation --- */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: var(--glass);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            z-index: 1000;
-            border-bottom: 1px solid var(--border);
-            animation: fadeInDown 0.8s var(--ease);
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 80px;
-        }
-
-        .logo {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #fff;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo span {
-            color: var(--primary);
-            position: relative;
-        }
-        
-        .logo i {
-            color: var(--primary);
-            font-size: 1.3rem;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            font-size: 1rem;
-            transition: color 0.3s ease;
-            position: relative;
-            padding-bottom: 4px;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--primary);
-            transition: width 0.3s var(--ease);
-        }
-
-        .nav-links a:hover {
-            color: #fff;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* --- Buttons --- */
-        .btn {
-            display: inline-block;
-            background-color: var(--primary);
-            color: #fff;
-            padding: 12px 28px;
-            border-radius: 50px; /* Fully Rounded */
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: transform 0.2s var(--ease), box-shadow 0.3s ease;
-            border: none;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            animation: primaryGlowPulse 3s infinite;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px var(--primary-glow);
-        }
-
-        .btn:active {
-            transform: translateY(0px);
-        }
-
-        .btn-secondary {
-            background-color: transparent;
-            color: #fff;
-            border: 2px solid var(--border);
-            animation: none;
-        }
-
-        .btn-secondary:hover {
-            background-color: var(--border);
-            border-color: var(--border);
-        }
-
-        /* --- Hero Section --- */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            background: 
-                radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.06) 0%, transparent 40%);
-            padding-top: 80px; /* Adjust for fixed header */
-        }
-
-        .hero-content {
-            max-width: 850px;
-            animation: fadeInUp 1s var(--ease) 0.2s both;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            color: #fff;
-            line-height: 1.1;
-            margin-bottom: 24px;
-            font-weight: 700;
-            letter-spacing: -0.04em;
-        }
-
-        .hero h1 span {
-            background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: backgroundGradientMove 4s linear infinite;
-        }
-
-        .hero p {
-            font-size: 1.4rem;
-            color: var(--text-dark);
-            margin-bottom: 40px;
-            font-weight: 400;
-        }
-
-        .hero-cta {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-        }
-
-        /* --- Services Section --- */
         .section {
             padding: 120px 0;
         }
 
-        .section-header {
-            text-align: center;
-            margin-bottom: 80px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+
+            color: var(--primary);
+            margin-bottom: 18px;
         }
 
-        .section-header h2 {
-            font-size: 3rem;
+        .eyebrow::before {
+            content: "";
+            width: 24px;
+            height: 1px;
+            background: var(--primary);
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: var(--font-heading);
+            letter-spacing: -0.04em;
+        }
+
+
+        /* =========================================================
+           HEADER
+        ========================================================= */
+
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+
+            z-index: 1000;
+
+            background: rgba(247, 248, 250, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+
+            border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+        }
+
+        .nav {
+            height: 76px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+
+            font-family: var(--font-heading);
+            font-size: 19px;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+        }
+
+        .logo-mark {
+            width: 34px;
+            height: 34px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 10px;
+
+            background: var(--dark);
             color: #fff;
-            margin-bottom: 16px;
-            letter-spacing: -0.03em;
+
+            font-size: 14px;
         }
 
-        .section-header h2 span {
+        .logo span {
             color: var(--primary);
         }
 
-        .section-header p {
-            font-size: 1.1rem;
-            color: var(--text-dark);
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 34px;
+
+            list-style: none;
         }
 
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 32px;
+        .nav-links a {
+            color: var(--text-soft);
+            font-size: 14px;
+            font-weight: 600;
+
+            transition: color var(--transition);
         }
 
-        .service-card {
-            background-color: var(--bg-card);
-            padding: 40px;
-            border-radius: 20px;
-            border: 1px solid var(--border);
-            transition: border-color 0.3s ease, transform 0.3s var(--ease);
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .nav-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+
+            padding: 11px 18px;
+
+            border-radius: 10px;
+
+            background: var(--dark);
+            color: #fff;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            transition:
+                transform var(--transition),
+                background var(--transition);
+        }
+
+        .nav-cta:hover {
+            background: #000;
+            transform: translateY(-1px);
+        }
+
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .hero {
             position: relative;
+
+            min-height: 760px;
+            padding-top: 76px;
+
+            display: flex;
+            align-items: center;
+
             overflow: hidden;
         }
 
-        .service-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-8px);
-        }
-        
-        .service-card::after {
-            content: '';
+        /*
+         * Very subtle background detail.
+         * No aggressive gradients or glowing effects.
+         */
+
+        .hero::before {
+            content: "";
+
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            transform: scaleX(0);
-            transition: transform 0.4s var(--ease);
-            transform-origin: left;
-        }
-        
-        .service-card:hover::after {
-            transform: scaleX(1);
+            top: 120px;
+            right: -160px;
+
+            width: 520px;
+            height: 520px;
+
+            border: 1px solid rgba(37, 99, 235, 0.08);
+            border-radius: 50%;
         }
 
-        .card-icon {
-            font-size: 2.5rem;
+        .hero::after {
+            content: "";
+
+            position: absolute;
+            top: 185px;
+            right: -95px;
+
+            width: 390px;
+            height: 390px;
+
+            border: 1px solid rgba(37, 99, 235, 0.06);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+
+            max-width: 860px;
+        }
+
+        .hero h1 {
+            max-width: 900px;
+
+            font-size: clamp(48px, 7vw, 82px);
+            line-height: 0.98;
+
+            font-weight: 800;
+
+            color: var(--text);
+
+            margin-bottom: 30px;
+        }
+
+        .hero h1 .highlight {
             color: var(--primary);
-            margin-bottom: 28px;
-            display: inline-block;
-            transition: transform 0.3s ease;
         }
 
-        .service-card:hover .card-icon {
-            animation: iconFloat 1s ease-in-out infinite;
+        .hero-description {
+            max-width: 670px;
+
+            font-size: 20px;
+            line-height: 1.7;
+
+            color: var(--text-soft);
+
+            margin-bottom: 38px;
         }
 
-        .service-card h3 {
-            font-size: 1.5rem;
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+
+            min-height: 50px;
+
+            padding: 0 21px;
+
+            border-radius: 11px;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            transition:
+                transform var(--transition),
+                background var(--transition),
+                border-color var(--transition);
+        }
+
+        .btn-primary {
+            background: var(--primary);
             color: #fff;
-            margin-bottom: 14px;
-            font-weight: 600;
         }
 
-        .service-card p {
-            color: var(--text-dark);
-            font-size: 1rem;
-            margin-bottom: 20px;
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
         }
-        
-        .card-link {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            background: #fff;
+            border-color: #d1d5db;
+            transform: translateY(-2px);
+        }
+
+        .hero-meta {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+
+            margin-top: 48px;
+
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .hero-meta-item {
             display: flex;
             align-items: center;
             gap: 8px;
-            transition: gap 0.2s ease;
-        }
-        
-        .card-link:hover {
-            gap: 12px;
         }
 
-        /* --- Tech Stack Section --- */
-        .tech-stack {
-            background-color: #0b162ad1;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            text-align: center;
+        .hero-meta-item i {
+            color: var(--primary);
+            font-size: 12px;
         }
 
-        .tech-icons {
-            display: flex;
-            justify-content: center;
-            gap: 50px;
-            flex-wrap: wrap;
-            font-size: 3rem;
-            color: #475569;
-            padding: 20px 0;
+        .hero-meta-divider {
+            width: 1px;
+            height: 16px;
+            background: var(--border);
         }
 
-        .tech-icons i {
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
 
-        .tech-icons i:hover {
+        /* =========================================================
+           INTRO / STATS
+        ========================================================= */
+
+        .intro {
+            background: var(--dark);
             color: #fff;
-            transform: scale(1.1);
         }
 
-        /* --- Contact Section --- */
-        .contact-content {
+        .intro-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 90px;
             align-items: center;
         }
-        
-        .contact-info h2 {
-            font-size: 3rem;
-            color: #fff;
-            margin-bottom: 20px;
-            letter-spacing: -0.03em;
-        }
-        
-        .contact-info h2 span {
-            color: var(--accent);
-        }
-        
-        .contact-info p {
-            font-size: 1.1rem;
-            color: var(--text-dark);
-            margin-bottom: 40px;
+
+        .intro h2 {
+            max-width: 700px;
+
+            font-size: clamp(34px, 4vw, 52px);
+            line-height: 1.08;
+
+            font-weight: 700;
+
+            margin-bottom: 24px;
         }
 
-        .contact-form-wrapper {
-            background: var(--glass);
-            border-radius: 20px;
+        .intro h2 span {
+            color: #8ab4ff;
+        }
+
+        .intro-text {
+            max-width: 650px;
+
+            color: #aeb6c4;
+
+            font-size: 17px;
+            line-height: 1.8;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+
+            border-left: 1px solid #293140;
+        }
+
+        .stat {
+            padding: 26px 30px;
+            border-bottom: 1px solid #293140;
+        }
+
+        .stat:nth-child(odd) {
+            border-right: 1px solid #293140;
+        }
+
+        .stat:nth-child(3),
+        .stat:nth-child(4) {
+            border-bottom: 0;
+        }
+
+        .stat-number {
+            font-family: var(--font-heading);
+
+            font-size: 32px;
+            font-weight: 800;
+
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #8e98a8;
+            font-size: 13px;
+        }
+
+
+        /* =========================================================
+           SERVICES
+        ========================================================= */
+
+        .section-heading {
+            max-width: 700px;
+            margin-bottom: 62px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(36px, 4vw, 54px);
+            line-height: 1.05;
+            margin-bottom: 18px;
+        }
+
+        .section-heading p {
+            color: var(--text-soft);
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .service {
+            background: var(--surface);
+
             border: 1px solid var(--border);
+            border-radius: var(--radius);
+
+            padding: 34px;
+
+            min-height: 330px;
+
+            display: flex;
+            flex-direction: column;
+
+            transition:
+                transform var(--transition),
+                border-color var(--transition),
+                box-shadow var(--transition);
+        }
+
+        .service:hover {
+            transform: translateY(-5px);
+
+            border-color: #cfd5dd;
+
+            box-shadow:
+                0 18px 40px rgba(16, 24, 40, 0.07);
+        }
+
+        .service-icon {
+            width: 48px;
+            height: 48px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 12px;
+
+            background: var(--primary-soft);
+            color: var(--primary);
+
+            margin-bottom: 28px;
+
+            font-size: 17px;
+        }
+
+        .service h3 {
+            font-size: 22px;
+            margin-bottom: 13px;
+        }
+
+        .service p {
+            color: var(--text-soft);
+            font-size: 15px;
+            line-height: 1.75;
+        }
+
+        .service-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            margin-top: auto;
+            padding-top: 30px;
+
+            color: var(--text);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .service-link i {
+            color: var(--primary);
+            transition: transform var(--transition);
+        }
+
+        .service:hover .service-link i {
+            transform: translateX(4px);
+        }
+
+
+        /* =========================================================
+           TECHNOLOGY
+        ========================================================= */
+
+        .technology {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tech-layout {
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 100px;
+            align-items: center;
+        }
+
+        .tech-heading h2 {
+            font-size: clamp(36px, 4vw, 50px);
+            line-height: 1.05;
+            margin-bottom: 18px;
+        }
+
+        .tech-heading p {
+            color: var(--text-soft);
+            line-height: 1.8;
+        }
+
+        .tech-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+
+            border-top: 1px solid var(--border);
+            border-left: 1px solid var(--border);
+        }
+
+        .tech-item {
+            min-height: 105px;
+
+            display: flex;
+            align-items: center;
+            gap: 14px;
+
+            padding: 24px;
+
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+
+            color: var(--text);
+
+            font-weight: 600;
+            font-size: 14px;
+
+            transition:
+                background var(--transition),
+                color var(--transition);
+        }
+
+        .tech-item:hover {
+            background: var(--bg);
+            color: var(--primary);
+        }
+
+        .tech-item i {
+            width: 28px;
+            text-align: center;
+
+            font-size: 22px;
+            color: var(--text-muted);
+
+            transition: color var(--transition);
+        }
+
+        .tech-item:hover i {
+            color: var(--primary);
+        }
+
+
+        /* =========================================================
+           PROCESS
+        ========================================================= */
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+
+            background: var(--border);
+
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+
+            overflow: hidden;
+        }
+
+        .process-step {
+            background: var(--surface);
+
+            padding: 34px;
+        }
+
+        .process-number {
+            color: var(--primary);
+
+            font-family: var(--font-heading);
+            font-size: 13px;
+            font-weight: 800;
+
+            margin-bottom: 50px;
+        }
+
+        .process-step h3 {
+            font-size: 21px;
+            margin-bottom: 12px;
+        }
+
+        .process-step p {
+            color: var(--text-soft);
+            font-size: 14px;
+            line-height: 1.75;
+        }
+
+
+        /* =========================================================
+           CONTACT
+        ========================================================= */
+
+        .contact {
+            padding-bottom: 130px;
+        }
+
+        .contact-box {
+            display: grid;
+            grid-template-columns: 0.85fr 1.15fr;
+
+            background: var(--dark);
+            color: #fff;
+
+            border-radius: 24px;
+
+            overflow: hidden;
+        }
+
+        .contact-info {
+            padding: 60px;
+        }
+
+        .contact-info .eyebrow {
+            color: #8ab4ff;
+        }
+
+        .contact-info .eyebrow::before {
+            background: #8ab4ff;
+        }
+
+        .contact-info h2 {
+            font-size: clamp(38px, 4vw, 56px);
+            line-height: 1.05;
+
+            margin-bottom: 22px;
+        }
+
+        .contact-info p {
+            max-width: 430px;
+
+            color: #aeb6c4;
+
+            font-size: 16px;
+            line-height: 1.8;
+
+            margin-bottom: 36px;
+        }
+
+        .email-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+
+            color: #fff;
+
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .email-link i {
+            color: #8ab4ff;
+        }
+
+        .contact-form {
+            background: #fff;
+            color: var(--text);
+
             padding: 50px;
-            backdrop-filter: blur(10px);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
 
         .form-group {
-            margin-bottom: 24px;
+            margin-bottom: 20px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 10px;
-            font-weight: 500;
-            color: #fff;
-            font-size: 0.95rem;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            margin-bottom: 8px;
         }
 
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 16px;
-            background-color: rgba(255,255,255,0.03);
+
             border: 1px solid var(--border);
-            border-radius: 12px;
+            border-radius: 10px;
+
+            background: #fff;
+
+            color: var(--text);
+
+            padding: 13px 14px;
+
             outline: none;
-            font-size: 1rem;
-            color: #fff;
-            transition: border-color 0.3s ease, background-color 0.3s ease;
+
+            font-size: 14px;
+
+            transition:
+                border-color var(--transition),
+                box-shadow var(--transition);
         }
-        
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 140px;
+        }
+
         .form-group input::placeholder,
         .form-group textarea::placeholder {
-            color: #475569;
+            color: #adb5c0;
         }
 
         .form-group input:focus,
         .form-group textarea:focus {
             border-color: var(--primary);
-            background-color: rgba(255,255,255,0.05);
+
+            box-shadow:
+                0 0 0 3px rgba(37, 99, 235, 0.08);
         }
 
-        /* --- Footer --- */
+        .submit-btn {
+            width: 100%;
+            border: 0;
+
+            cursor: pointer;
+        }
+
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
         footer {
-            background: var(--bg-deep);
-            color: var(--text-dark);
-            padding: 60px 0;
+            padding: 38px 0;
+
+            background: #fff;
+
             border-top: 1px solid var(--border);
-            text-align: center;
-            font-size: 0.95rem;
-        }
-        
-        footer .logo {
-            justify-content: center;
-            margin-bottom: 20px;
-            font-size: 1.4rem;
         }
 
-        /* --- Responsive Queries --- */
-        @media (max-width: 1024px) {
-            .hero h1 { font-size: 3.2rem; }
-            .contact-content { grid-template-columns: 1fr; gap: 40px; }
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 30px;
         }
 
-        @media (max-width: 768px) {
-            .nav-links, header .btn { display: none; }
-            .hero h1 { font-size: 2.6rem; }
-            .hero p { font-size: 1.2rem; }
-            .section-header h2, .contact-info h2 { font-size: 2.4rem; }
-            .contact-form-wrapper { padding: 30px; }
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 18px;
         }
+
+        .footer-logo {
+            font-family: var(--font-heading);
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .footer-logo span {
+            color: var(--primary);
+        }
+
+        .footer-copy {
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        .footer-location {
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media (max-width: 900px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                min-height: 700px;
+            }
+
+            .intro-grid,
+            .tech-layout,
+            .contact-box {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+
+            .services-grid,
+            .process-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tech-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stats {
+                border-left: 0;
+            }
+
+            .contact-info {
+                padding: 45px 35px;
+            }
+
+            .contact-form {
+                padding: 35px;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .container {
+                width: min(var(--container), calc(100% - 32px));
+            }
+
+            .section {
+                padding: 85px 0;
+            }
+
+            .hero {
+                min-height: 650px;
+            }
+
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .hero-description {
+                font-size: 17px;
+            }
+
+            .hero-meta {
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .hero-meta-divider {
+                display: none;
+            }
+
+            .nav-cta {
+                display: none;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .stat {
+                border-right: 0 !important;
+                border-bottom: 1px solid #293140 !important;
+            }
+
+            .stat:last-child {
+                border-bottom: 0 !important;
+            }
+
+            .tech-list {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .footer-inner,
+            .footer-left {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-left {
+                gap: 8px;
+            }
+        }
+
     </style>
 </head>
+
 <body>
 
-    <!-- Header -->
-    <header>
+
+    <!-- =========================================================
+         HEADER
+    ========================================================= -->
+
+    <header class="site-header">
         <div class="container">
-            <nav>
+
+            <nav class="nav">
+
                 <a href="#" class="logo">
-                    <i class="fa-solid fa-satellite-dish"></i> Bright<span>programmers</span>
+
+                    <span class="logo-mark">
+                        <i class="fa-solid fa-code"></i>
+                    </span>
+
+                    Bright<span>programmers</span>
+
                 </a>
+
+
                 <ul class="nav-links">
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#tech">Tech</a></li>
-                    <li><a href="#contact">Contact</a></li>
+
+                    <li>
+                        <a href="#services">Services</a>
+                    </li>
+
+                    <li>
+                        <a href="#technology">Technology</a>
+                    </li>
+
+                    <li>
+                        <a href="#process">Process</a>
+                    </li>
+
+                    <li>
+                        <a href="#contact">Contact</a>
+                    </li>
+
                 </ul>
-                <a href="#contact" class="btn">Launch Project <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i></a>
+
+
+                <a href="#contact" class="nav-cta">
+
+                    Start a project
+
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                </a>
+
             </nav>
+
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Engineering <span>Scalable</span><br>Digital Solutions.</h1>
-                <p>Brightprogrammers develops robust web applications, sophisticated architectures, and custom software for forward-thinking enterprises.</p>
-                <div class="hero-cta">
-                    <a href="#contact" class="btn">Get Started</a>
-                    <a href="#services" class="btn btn-secondary">Explore Our Craft</a>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Services Section -->
-    <section class="section" id="services">
-        <div class="container">
-            <div class="section-header">
-                <h2>Our <span>Craft</span></h2>
-                <p>We blend modern code with elegant architecture to build platforms that perform.</p>
-            </div>
-            <div class="grid-3">
-                <div class="service-card">
-                    <div class="card-icon"><i class="fa-solid fa-cubes"></i></div>
-                    <h3>Custom Software</h3>
-                    <p>Tailored enterprise solutions designed for complex workflows and high-stakes performance.</p>
-                    <a href="#contact" class="card-link">Discuss Requirements <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-                <div class="service-card">
-                    <div class="card-icon"><i class="fa-solid fa-code"></i></div>
-                    <h3>Full-Stack Web</h3>
-                    <p>Modern, responsive web applications built using React, Node.js, and scalable cloud infrastructure.</p>
-                    <a href="#contact" class="card-link">See Capabilities <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-                <div class="service-card">
-                    <div class="card-icon"><i class="fa-solid fa-server"></i></div>
-                    <h3>API & DevOps</h3>
-                    <p>Robust API development, legacy system integrations, and secure cloud deployment pipelines.</p>
-                    <a href="#contact" class="card-link">Let's Integrate <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Tech Stack -->
-    <section class="section tech-stack" id="tech">
-        <div class="container">
-            <div class="section-header" style="margin-bottom: 50px;">
-                <h2 style="font-size: 2.2rem;">Our Core Stack</h2>
-            </div>
-            <div class="tech-icons">
-                <i class="fa-brands fa-react" title="React"></i>
-                <i class="fa-brands fa-node-js" title="Node.js"></i>
-                <i class="fa-brands fa-python" title="Python"></i>
-                <i class="fa-brands fa-php" title="PHP"></i>
-                <i class="fa-brands fa-aws" title="AWS Infrastructure"></i>
-                <i class="fa-brands fa-git-alt" title="Git Version Control"></i>
-            </div>
-        </div>
-    </section>
+    <!-- =========================================================
+         HERO
+    ========================================================= -->
 
-    <!-- Contact Section -->
-    <section class="section" id="contact">
-        <div class="container">
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h2>Let's Build<br>Something <span>Bright</span>.</h2>
-                    <p>Ready to turn your vision into a robust digital product? Tell us about your project, your stack preferences, or your biggest technical challenge.</p>
-                    <div class="btn btn-secondary" style="pointer-events: none;"><i class="fa-solid fa-envelope" style="margin-right:10px;"></i>hello@brightprogrammers.co.in</div>
-                </div>
-                
-                <div class="contact-form-wrapper">
-                    <form action="#" method="POST" onsubmit="alert('Thank you! Brightprogrammers will connect with you shortly.'); return false;">
-                        <div class="form-group">
-                            <label for="name">Company Name / Contact</label>
-                            <input type="text" id="name" required placeholder="Acme Inc. / Jane Doe">
+    <main>
+
+        <section class="hero">
+
+            <div class="container">
+
+                <div class="hero-content">
+
+                    <div class="eyebrow">
+                        Web development & digital solutions
+                    </div>
+
+
+                    <h1>
+                        Websites and software
+                        <span class="highlight">built properly.</span>
+                    </h1>
+
+
+                    <p class="hero-description">
+
+                        Brightprogrammers creates fast, reliable and
+                        thoughtfully designed digital experiences — from
+                        business websites and custom WordPress solutions
+                        to web applications and integrations.
+
+                    </p>
+
+
+                    <div class="hero-actions">
+
+                        <a href="#contact" class="btn btn-primary">
+
+                            Start a project
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
+
+                        <a href="#services" class="btn btn-outline">
+
+                            Explore services
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="hero-meta">
+
+                        <div class="hero-meta-item">
+                            <i class="fa-solid fa-circle-check"></i>
+                            Custom development
                         </div>
-                        <div class="form-group">
-                            <label for="email">Work Email</label>
-                            <input type="email" id="email" required placeholder="jane.doe@acme.com">
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Project Scope / Challenge</label>
-                            <textarea id="message" rows="5" required placeholder="Describe the application, architecture, or integration needs..."></textarea>
-                        </div>
-                        <button type="submit" class="btn" style="width: 100%;">Initiate Discussion <i class="fa-solid fa-paper-plane" style="margin-left: 10px;"></i></button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Footer -->
+                        <div class="hero-meta-divider"></div>
+
+                        <div class="hero-meta-item">
+                            <i class="fa-solid fa-circle-check"></i>
+                            WordPress & WooCommerce
+                        </div>
+
+                        <div class="hero-meta-divider"></div>
+
+                        <div class="hero-meta-item">
+                            <i class="fa-solid fa-circle-check"></i>
+                            Long-term support
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             INTRO
+        ====================================================== -->
+
+        <section class="section intro">
+
+            <div class="container">
+
+                <div class="intro-grid">
+
+                    <div>
+
+                        <div class="eyebrow">
+                            A practical approach
+                        </div>
+
+                        <h2>
+                            Technology should make your
+                            <span>business easier.</span>
+                        </h2>
+
+                        <p class="intro-text">
+
+                            Good development is more than writing code.
+                            It's understanding the problem, choosing the
+                            right solution and building something that
+                            remains reliable as your business grows.
+
+                            <br><br>
+
+                            Every project is approached with a focus on
+                            performance, maintainability and a clean user
+                            experience.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="stats">
+
+                        <div class="stat">
+
+                            <div class="stat-number">
+                                8+
+                            </div>
+
+                            <div class="stat-label">
+                                Years of experience
+                            </div>
+
+                        </div>
+
+
+                        <div class="stat">
+
+                            <div class="stat-number">
+                                100%
+                            </div>
+
+                            <div class="stat-label">
+                                Custom solutions
+                            </div>
+
+                        </div>
+
+
+                        <div class="stat">
+
+                            <div class="stat-number">
+                                Web
+                            </div>
+
+                            <div class="stat-label">
+                                Development focused
+                            </div>
+
+                        </div>
+
+
+                        <div class="stat">
+
+                            <div class="stat-number">
+                                Global
+                            </div>
+
+                            <div class="stat-label">
+                                Client collaboration
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             SERVICES
+        ====================================================== -->
+
+        <section class="section" id="services">
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <div class="eyebrow">
+                        What I do
+                    </div>
+
+                    <h2>
+                        Development without the unnecessary complexity.
+                    </h2>
+
+                    <p>
+                        From a new website to a complicated existing
+                        system, the goal is always the same: build
+                        something useful, stable and easy to maintain.
+                    </p>
+
+                </div>
+
+
+                <div class="services-grid">
+
+
+                    <article class="service">
+
+                        <div class="service-icon">
+                            <i class="fa-brands fa-wordpress-simple"></i>
+                        </div>
+
+                        <h3>
+                            WordPress
+                        </h3>
+
+                        <p>
+                            Custom WordPress websites, themes, plugins,
+                            integrations, performance improvements and
+                            ongoing maintenance.
+                        </p>
+
+                        <a href="#contact" class="service-link">
+
+                            Discuss your website
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
+                    </article>
+
+
+
+                    <article class="service">
+
+                        <div class="service-icon">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+
+                        <h3>
+                            WooCommerce
+                        </h3>
+
+                        <p>
+                            Custom WooCommerce functionality, product
+                            systems, checkout improvements, integrations
+                            and store optimization.
+                        </p>
+
+                        <a href="#contact" class="service-link">
+
+                            Discuss your store
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
+                    </article>
+
+
+
+                    <article class="service">
+
+                        <div class="service-icon">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+
+                        <h3>
+                            Web Development
+                        </h3>
+
+                        <p>
+                            Responsive websites and web applications
+                            built with clean HTML, CSS, JavaScript,
+                            PHP and modern development practices.
+                        </p>
+
+                        <a href="#contact" class="service-link">
+
+                            Discuss your project
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
+                    </article>
+
+
+
+                    <article class="service">
+
+                        <div class="service-icon">
+                            <i class="fa-solid fa-puzzle-piece"></i>
+                        </div>
+
+                        <h3>
+                            Custom Solutions
+                        </h3>
+
+                        <p>
+                            Bespoke functionality for workflows,
+                            dashboards, content systems, APIs and
+                            business-specific requirements.
+                        </p>
+
+                        <a href="#contact" class="service-link">
+
+                            Talk through the idea
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
+                    </article>
+
+
+
+                    <article class="service">
+
+                        <div class="service-icon">
+                            <i class="fa-solid fa-gauge-high"></i>
+                        </div>
+
+                        <h3>
+                            Performance
+                        </h3>
+
+                        <p>
+                            Diagnose slow websites, optimize assets,
+                            improve loading times and resolve the
+                            underlying causes of performance issues.
+                        </p>
+
+                        <a href="#contact" class="service-link">
+
+                            Improve your website
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
+                    </article>
+
+
+
+                    <article class="service">
+
+                        <div class="service-icon">
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                        </div>
+
+                        <h3>
+                            Maintenance & Support
+                        </h3>
+
+                        <p>
+                            Ongoing development, troubleshooting,
+                            updates, security improvements and
+                            technical support for existing websites.
+                        </p>
+
+                        <a href="#contact" class="service-link">
+
+                            Get technical help
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
+                    </article>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             TECHNOLOGY
+        ====================================================== -->
+
+        <section class="section technology" id="technology">
+
+            <div class="container">
+
+                <div class="tech-layout">
+
+                    <div class="tech-heading">
+
+                        <div class="eyebrow">
+                            Technology
+                        </div>
+
+                        <h2>
+                            The right tools for the job.
+                        </h2>
+
+                        <p>
+                            Technology is selected based on what the
+                            project actually needs — not simply because
+                            something happens to be popular.
+                        </p>
+
+                    </div>
+
+
+                    <div class="tech-list">
+
+                        <div class="tech-item">
+
+                            <i class="fa-brands fa-wordpress-simple"></i>
+
+                            WordPress
+
+                        </div>
+
+
+                        <div class="tech-item">
+
+                            <i class="fa-brands fa-php"></i>
+
+                            PHP
+
+                        </div>
+
+
+                        <div class="tech-item">
+
+                            <i class="fa-brands fa-js"></i>
+
+                            JavaScript
+
+                        </div>
+
+
+                        <div class="tech-item">
+
+                            <i class="fa-brands fa-html5"></i>
+
+                            HTML / CSS
+
+                        </div>
+
+
+                        <div class="tech-item">
+
+                            <i class="fa-solid fa-database"></i>
+
+                            MySQL
+
+                        </div>
+
+
+                        <div class="tech-item">
+
+                            <i class="fa-brands fa-shopify"></i>
+
+                            Shopify
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             PROCESS
+        ====================================================== -->
+
+        <section class="section" id="process">
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <div class="eyebrow">
+                        How I work
+                    </div>
+
+                    <h2>
+                        Simple process. Clear communication.
+                    </h2>
+
+                    <p>
+                        No unnecessary layers between you and the person
+                        building your project.
+                    </p>
+
+                </div>
+
+
+                <div class="process-grid">
+
+
+                    <div class="process-step">
+
+                        <div class="process-number">
+                            01 / UNDERSTAND
+                        </div>
+
+                        <h3>
+                            Understand the problem
+                        </h3>
+
+                        <p>
+                            First, I learn what you are trying to achieve,
+                            what already exists and where the actual
+                            technical problem is.
+                        </p>
+
+                    </div>
+
+
+                    <div class="process-step">
+
+                        <div class="process-number">
+                            02 / BUILD
+                        </div>
+
+                        <h3>
+                            Build the right solution
+                        </h3>
+
+                        <p>
+                            The solution is developed with attention to
+                            performance, usability, maintainability and
+                            the requirements of the business.
+                        </p>
+
+                    </div>
+
+
+                    <div class="process-step">
+
+                        <div class="process-number">
+                            03 / SUPPORT
+                        </div>
+
+                        <h3>
+                            Refine and support
+                        </h3>
+
+                        <p>
+                            After launch, the project can continue to be
+                            improved, maintained and supported as your
+                            requirements evolve.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             CONTACT
+        ====================================================== -->
+
+        <section class="contact" id="contact">
+
+            <div class="container">
+
+                <div class="contact-box">
+
+
+                    <div class="contact-info">
+
+                        <div class="eyebrow">
+                            Start a conversation
+                        </div>
+
+                        <h2>
+                            Have a project in mind?
+                        </h2>
+
+                        <p>
+                            Tell me what you are building, what is
+                            currently not working, or what you would
+                            like to improve.
+
+                            I'll get back to you with the next steps.
+                        </p>
+
+
+                        <a
+                            href="mailto:hello@brightprogrammers.co.in"
+                            class="email-link"
+                        >
+
+                            <i class="fa-solid fa-envelope"></i>
+
+                            hello@brightprogrammers.co.in
+
+                        </a>
+
+                    </div>
+
+
+
+                    <div class="contact-form">
+
+                        <form
+                            action="#"
+                            method="POST"
+                            onsubmit="alert('Thank you! Brightprogrammers will connect with you shortly.'); return false;"
+                        >
+
+                            <div class="form-grid">
+
+
+                                <div class="form-group">
+
+                                    <label for="name">
+                                        Name
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        required
+                                        placeholder="Your name"
+                                    >
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label for="email">
+                                        Email
+                                    </label>
+
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        required
+                                        placeholder="you@company.com"
+                                    >
+
+                                </div>
+
+
+                                <div class="form-group full">
+
+                                    <label for="company">
+                                        Company / Website
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="company"
+                                        name="company"
+                                        placeholder="Company name or website"
+                                    >
+
+                                </div>
+
+
+                                <div class="form-group full">
+
+                                    <label for="message">
+                                        Tell me about your project
+                                    </label>
+
+                                    <textarea
+                                        id="message"
+                                        name="message"
+                                        required
+                                        placeholder="What are you looking to build, improve or fix?"
+                                    ></textarea>
+
+                                </div>
+
+
+                                <div class="form-group full">
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-primary submit-btn"
+                                    >
+
+                                        Send project enquiry
+
+                                        <i class="fa-solid fa-arrow-right"></i>
+
+                                    </button>
+
+                                </div>
+
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================= -->
+
     <footer>
+
         <div class="container">
-            <a href="#" class="logo">
-                <i class="fa-solid fa-satellite-dish"></i> Bright<span>programmers</span>
-            </a>
-            <p>&copy; 2026 Brightprogrammers. An MSME Registered Enterprise.</p>
-            <p style="font-size: 0.8rem; margin-top: 10px; color: #475569;">Zirakpur, Punjab, India</p>
+
+            <div class="footer-inner">
+
+
+                <div class="footer-left">
+
+                    <div class="footer-logo">
+                        Bright<span>programmers</span>
+                    </div>
+
+                    <div class="footer-copy">
+                        © 2026 Brightprogrammers. All rights reserved.
+                    </div>
+
+                </div>
+
+
+                <div class="footer-location">
+                    Zirakpur, Punjab, India
+                </div>
+
+
+            </div>
+
         </div>
+
     </footer>
+
 
 </body>
 </html>
+```
