@@ -1033,12 +1033,12 @@
             <nav class="nav">
 
                 <a href="#" class="logo">
-
+<
                     <span class="logo-mark">
                         <i class="fa-solid fa-code"></i>
                     </span>
 
-                    Bright<span>programmers</span>
+                    Bright<span>programmers</span>>
 
                 </a>
 
@@ -1705,11 +1705,11 @@
 
                     <div class="contact-form">
 
-                        <form
-                            action="#"
-                            method="POST"
-                            onsubmit="alert('Thank you! Brightprogrammers will connect with you shortly.'); return false;"
-                        >
+                        <form id="contactForm">
+                            <input type="hidden" name="_subject" value="New Project Enquiry — Brightprogrammers">
+                            <input type="hidden" name="_template" value="table">
+                            <input type="hidden" name="_captcha" value="true">
+                            <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none !important;">
 
                             <div class="form-grid">
 
@@ -1793,6 +1793,8 @@
 
                                     </button>
 
+                                    <div id="formStatus" role="status" aria-live="polite" style="display:none; margin-top:14px; font-size:14px; line-height:1.5;"></div>
+
                                 </div>
 
 
@@ -1837,7 +1839,7 @@
 
 
                 <div class="footer-location">
-                    Mohali, Punjab, India
+                    Zirakpur, Punjab, India
                 </div>
 
 
@@ -1848,6 +1850,64 @@
     </footer>
 
 
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("contactForm");
+    const status = document.getElementById("formStatus");
+    const submitButton = form ? form.querySelector('button[type="submit"]') : null;
+
+    if (!form || !status || !submitButton) return;
+
+    form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        const originalButtonHTML = submitButton.innerHTML;
+        submitButton.disabled = true;
+        submitButton.innerHTML = 'Sending... <i class="fa-solid fa-spinner fa-spin"></i>';
+
+        status.style.display = "block";
+        status.textContent = "Sending your enquiry...";
+        status.style.color = "#667085";
+
+        const formData = new FormData(form);
+        formData.append("_replyto", formData.get("email"));
+        formData.append("_subject", "New Project Enquiry — Brightprogrammers");
+
+        try {
+            const response = await fetch("https://formsubmit.co/ajax/brightprogrammers786@gmail.com", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json"
+                },
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (response.ok && result.success) {
+                form.reset();
+                status.textContent = "Thank you! Your enquiry has been sent. I'll get back to you shortly.";
+                status.style.color = "#15803d";
+            } else {
+                throw new Error(result.message || "Unable to send the enquiry.");
+            }
+        } catch (error) {
+            console.error("Contact form error:", error);
+            status.textContent = "Sorry, something went wrong. Please try again or email brightprogrammers786@gmail.com directly.";
+            status.style.color = "#b42318";
+        } finally {
+            submitButton.disabled = false;
+            submitButton.innerHTML = originalButtonHTML;
+        }
+    });
+});
+</script>
+
 </body>
-</html>
-```
+
